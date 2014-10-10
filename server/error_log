@@ -1,0 +1,70 @@
+[09-Oct-2014 20:17:58 America/Denver] PHP Parse error:  syntax error, unexpected '")</p>"' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ';' in /home1/tlithrtw/public_html/server/dbsetup.php on line 19
+[09-Oct-2014 20:18:12 America/Denver] PHP Notice:  Undefined index: email in /home1/tlithrtw/public_html/server/signup.php on line 7
+[09-Oct-2014 20:18:12 America/Denver] PHP Notice:  Undefined index: password in /home1/tlithrtw/public_html/server/signup.php on line 8
+[09-Oct-2014 20:18:12 America/Denver] PHP Notice:  Undefined index: username in /home1/tlithrtw/public_html/server/signup.php on line 9
+[09-Oct-2014 20:20:54 America/Denver] PHP Notice:  Undefined index: email in /home1/tlithrtw/public_html/server/signup.php on line 7
+[09-Oct-2014 20:20:54 America/Denver] PHP Notice:  Undefined index: password in /home1/tlithrtw/public_html/server/signup.php on line 8
+[09-Oct-2014 20:20:54 America/Denver] PHP Notice:  Undefined index: username in /home1/tlithrtw/public_html/server/signup.php on line 9
+[09-Oct-2014 20:20:57 America/Denver] PHP Parse error:  syntax error, unexpected '")</p>"' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ';' in /home1/tlithrtw/public_html/server/dbsetup.php on line 18
+[09-Oct-2014 20:23:13 America/Denver] PHP Parse error:  syntax error, unexpected '")</p>"' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ';' in /home1/tlithrtw/public_html/server/dbsetup.php on line 18
+[09-Oct-2014 20:28:19 America/Denver] PHP Parse error:  syntax error, unexpected '")</p>"' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ';' in /home1/tlithrtw/public_html/server/dbsetup.php on line 18
+[09-Oct-2014 20:31:20 America/Denver] PHP Parse error:  syntax error, unexpected '")</p>"' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ';' in /home1/tlithrtw/public_html/server/dbsetup.php on line 19
+[09-Oct-2014 20:34:23 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: parameter was not defined in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:34:24 America/Denver] PHP Fatal error:  Call to undefined method PDOStatement::fenchAll() in /home1/tlithrtw/public_html/server/dbsetup.php on line 26
+[09-Oct-2014 20:35:28 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: parameter was not defined in /home1/tlithrtw/public_html/server/dbsetup.php on line 26
+[09-Oct-2014 20:35:28 America/Denver] PHP Fatal error:  Call to undefined method PDOStatement::fenchAll() in /home1/tlithrtw/public_html/server/dbsetup.php on line 27
+[09-Oct-2014 20:36:57 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: parameter was not defined in /home1/tlithrtw/public_html/server/dbsetup.php on line 26
+[09-Oct-2014 20:36:57 America/Denver] PHP Fatal error:  Call to undefined method PDOStatement::fenchAll() in /home1/tlithrtw/public_html/server/dbsetup.php on line 27
+[09-Oct-2014 20:37:17 America/Denver] PHP Parse error:  syntax error, unexpected '$sth' (T_VARIABLE), expecting ',' or ';' in /home1/tlithrtw/public_html/server/dbsetup.php on line 26
+[09-Oct-2014 20:37:27 America/Denver] PHP Parse error:  syntax error, unexpected '$sth' (T_VARIABLE), expecting ',' or ';' in /home1/tlithrtw/public_html/server/dbsetup.php on line 26
+[09-Oct-2014 20:37:32 America/Denver] PHP Parse error:  syntax error, unexpected '$sth' (T_VARIABLE), expecting ',' or ';' in /home1/tlithrtw/public_html/server/dbsetup.php on line 26
+[09-Oct-2014 20:39:43 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: parameter was not defined in /home1/tlithrtw/public_html/server/dbsetup.php on line 27
+[09-Oct-2014 20:39:43 America/Denver] PHP Fatal error:  Call to undefined method PDOStatement::fenchAll() in /home1/tlithrtw/public_html/server/dbsetup.php on line 28
+[09-Oct-2014 20:40:29 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: parameter was not defined in /home1/tlithrtw/public_html/server/dbsetup.php on line 27
+[09-Oct-2014 20:40:29 America/Denver] PHP Fatal error:  Call to undefined method PDOStatement::fenchAll() in /home1/tlithrtw/public_html/server/dbsetup.php on line 28
+[09-Oct-2014 20:41:09 America/Denver] PHP Fatal error:  Call to undefined method PDOStatement::fenchAll() in /home1/tlithrtw/public_html/server/dbsetup.php on line 28
+[09-Oct-2014 20:41:52 America/Denver] PHP Fatal error:  Call to undefined method PDOStatement::fenchAll() in /home1/tlithrtw/public_html/server/dbsetup.php on line 29
+[09-Oct-2014 20:47:31 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/tlithrtw/public_html/server/signin.php on line 20
+[09-Oct-2014 20:47:32 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/tlithrtw/public_html/server/signin.php on line 20
+[09-Oct-2014 20:47:32 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/tlithrtw/public_html/server/signin.php on line 20
+[09-Oct-2014 20:47:32 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/tlithrtw/public_html/server/signin.php on line 20
+[09-Oct-2014 20:47:33 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/tlithrtw/public_html/server/signin.php on line 20
+[09-Oct-2014 20:47:33 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/tlithrtw/public_html/server/signin.php on line 20
+[09-Oct-2014 20:47:33 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/tlithrtw/public_html/server/signin.php on line 20
+[09-Oct-2014 20:47:34 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/tlithrtw/public_html/server/signin.php on line 20
+[09-Oct-2014 20:47:35 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/tlithrtw/public_html/server/signin.php on line 20
+[09-Oct-2014 20:47:35 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/tlithrtw/public_html/server/signin.php on line 20
+[09-Oct-2014 20:47:35 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/tlithrtw/public_html/server/signin.php on line 20
+[09-Oct-2014 20:47:35 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/tlithrtw/public_html/server/signin.php on line 20
+[09-Oct-2014 20:48:34 America/Denver] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /home1/tlithrtw/public_html/server/signin.php on line 20
+[09-Oct-2014 20:48:55 America/Denver] PHP Notice:  Undefined index: email in /home1/tlithrtw/public_html/server/signin.php on line 3
+[09-Oct-2014 20:48:55 America/Denver] PHP Notice:  Undefined index: password in /home1/tlithrtw/public_html/server/signin.php on line 4
+[09-Oct-2014 20:49:08 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:49:29 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:12 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:13 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:13 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:14 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:14 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:14 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:14 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:14 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:14 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:15 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:15 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:15 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:15 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:15 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:15 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:16 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:16 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:16 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:17 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:50:17 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:51:10 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:51:20 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:54:04 America/Denver] PHP Parse error:  syntax error, unexpected '}' in /home1/tlithrtw/public_html/server/dbsetup.php on line 25
+[09-Oct-2014 20:55:07 America/Denver] PHP Notice:  Undefined variable: row in /home1/tlithrtw/public_html/server/signin.php on line 29
+[09-Oct-2014 20:55:23 America/Denver] PHP Notice:  Undefined index: username in /home1/tlithrtw/public_html/server/signin.php on line 29
+[09-Oct-2014 20:55:56 America/Denver] PHP Notice:  Undefined index: username in /home1/tlithrtw/public_html/server/signin.php on line 28
+[09-Oct-2014 20:56:38 America/Denver] PHP Notice:  Undefined index: username in /home1/tlithrtw/public_html/server/signin.php on line 29

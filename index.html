@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<head>
+	<title>log test</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="dist/bootstrap.min.css" rel="stylesheet">
+	<link href="dist/jumbotron-narrow.css" rel="stylesheet">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#regbt").click(function(){
+			if(!checkInput()){
+				return;
+			}
+			else{
+				$.post("server/signup.php",
+				{
+					email:$("#emailinput").val() ,
+					password:$("#password").val(),
+					username:$("#username").val()
+				},
+				function(data,status){
+					checkData(data,$("#username").val());
+				});
+			}
+		});
+
+		$("#bt_si").click(function(){
+			if(!checkInput_si()){
+				return;
+			}
+			else{
+				$.post("server/signin.php",
+				{
+					email:$("#emailinput_si").val() ,
+					password:$("#password_si").val()
+				},
+				function(data,status){
+					alert(data);
+					checkData_si(data);
+				});
+			}
+		});
+
+		$("#bt_su").click(function(){
+			$("#close_si").click();
+			$("#emailinput").val($("#emailinput_si").val());
+			$("#emailinput").css("border-color","green");
+		});
+
+		$("button.li-close").click(function(){
+			$(this).parent().parent().fadeOut();
+		});
+	});
+
+	function checkData(data,str){
+		if(data == 'wrong'){
+			alert('Email has taken!');
+		}
+		else if(data = 'success'){
+			alert('Account is Created!\nClick Button to Chatting Page!');
+			var xmlhttp;
+		if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else
+		{// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function()
+		{
+			if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+				document.write (xmlhttp.responseText);
+			}
+		}
+		xmlhttp.open("GET","default.php?user="+str,true);
+		xmlhttp.send();
+		}
+	}
+
+	function checkData_si(data){
+		if(data == 'nouser'){
+			$("#ep1_si").text("This Email address is NOT Registered.\nYou can Sign Up.");
+			$("#ep1_si").fadeIn();
+			$("#emailinput_si").css("border-color","red");
+			$("#bt_su").fadeIn();
+		}
+		else if(data == 'wrongpassword'){
+			$("#pp1_si").text("Email Address and Password are NOT matching.\nPlease try again.");
+			$("#pp1_si").fadeIn();
+			$("#emailinput_si").css("border-color","red");
+			$("#password_si").css("border-color","red");
+		}
+		else {
+			//alert('Account is ok!\n Click Button to Chatting Page!');
+			var xmlhttp;
+		if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else
+		{// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function()
+		{
+			if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+				document.write (xmlhttp.responseText);
+			}
+		}
+		xmlhttp.open("GET","default.php?user="+data,true);
+		xmlhttp.send();
+		}
+	}
+	
+	function isMail(mail){ 
+		var patrn = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+		if (!patrn.test(mail)) return false;
+		else	return true;
+	}
+
+	function isSame(a,b){
+		if(a == b) return true;
+		else return false;
+	}
+
+	function checkInput(){
+		var e1 = $("#emailinput").val();
+		var e2 = $("#username").val();
+		var pwd = $("#password").val();
+		var pwd2 = $("#password2").val();
+		if (e1 == "") {
+			$("#ep1").fadeIn();
+			$("#emailinput").css("border-color","red");
+			return false;
+		}
+		if (e2 == "") {
+			$("#ep2").fadeIn();
+			$("#username").css("border-color","red");
+			return false;
+		}
+		if (pwd == "") {
+			$("#pp1").fadeIn();
+			$("#password").css("border-color","red");
+			return false;
+		}
+		if (pwd2 == "") {
+			$("#pp2").fadeIn();
+			$("#password2").css("border-color","red");
+			return false;
+		}
+		if (!isMail(e1)) {
+			$("#ep1").text("Illegal Email Address");
+			$("#ep1").fadeIn();
+			$("#emailinput").css("border-color","red");
+			return false;
+		}
+		if (!isSame(pwd,pwd2)) {
+			$("#pp2").text("Two Passwrods are different");
+			$("#pp2").fadeIn();
+			$("#password").css("border-color","red");
+			$("#password2").css("border-color","red");
+			return false;
+		}
+		return true;
+	}
+
+	function checkInput_si(){
+		var e1 = $("#emailinput_si").val();
+		var pwd = $("#password_si").val();
+		if (e1 == "") {
+			$("#ep1_si").fadeIn();
+			$("#emailinput_si").css("border-color","red");
+			return false;
+		}
+		if (pwd == "") {
+			$("#pp1_si").fadeIn();
+			$("#password_si").css("border-color","red");
+			return false;
+		}
+		if (!isMail(e1)) {
+			$("#ep1_si").text("Illegal Email Address");
+			$("#ep1_si").fadeIn();
+			$("#emailinput_si").css("border-color","red");
+			return false;
+		}
+		return true;
+	}
+
+
+
+</script>
+</head>
+
+<body>
+	
+	<div class="container">
+		<div class="header">
+			<ul class="nav nav-pills pull-right"></ul>
+			<h3 class="text-muted">Chatting</h3>
+		</div>
+		<div class="jumbotron">
+			<h1>Welcom</h1>
+			<p class="lead">Welcome to Chatting!<br> Please Sign In or Sign Up</p>
+			<button class="btn btn-primary" data-toggle="modal" data-target="#cr_Modal">Sign In</button>
+			<button class="btn btn-primary" data-toggle="modal" data-target="#su_Modal">Sign Up</button>
+		</div>
+	</div>
+
+
+
+<!-- Sign Up Modal -->
+<div class="modal fade bs-example-modal-sm" id="su_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		<h4 class="modal-title" id="myModalLabel">Sing Up</h4>
+		</div>
+		<div class="modal-body">
+				<div class="form-group">
+					<label class="sr-only" for="emailinput">Email address</label><font color='red'><p id='ep1' style="display:none;">required</p></font>
+					<div class="input-group">
+						<div class="input-group-addon">@</div>
+						<input type="email" class="form-control" id="emailinput" placeholder='Enter Email address' required autofocus onkeydown='if(event.keyCode==13){regbt.click()}'>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for="username">Email address Again</label><font color='red'><p id='ep2' style="display:none;">required</p></font>
+					<input class="form-control" id="username" placeholder='Enter UserName' required autofocus onkeydown='if(event.keyCode==13){regbt.click()}'>
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for='password'>Password</label><font color='red'><p id='pp1' style="display:none;">required</p></font>
+					<input type="password" class="form-control" id="password" placeholder='Enter Password' required onkeydown='if(event.keyCode==13){regbt.click()}'>
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for='password2'>Password Again</label><font color='red'><p id='pp2' style="display:none;">required</p></font>
+					<input type="password" class="form-control" id="password2" placeholder='Enter Password Again' required onkeydown='if(event.keyCode==13){regbt.click()}'>
+				</div>
+		</div>
+		<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal" id='close_su'>Close</button>
+		<button type="button" class="btn btn-primary" id="regbt" >Sign Up</button>
+		</div>
+	</div>
+	</div>
+</div>
+
+<!-- Sign In Modal -->
+<div class="modal fade bs-example-modal-sm" id="cr_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		<h4 class="modal-title" id="myModalLabel">Sign in</h4>
+		</div>
+		<div class="modal-body">
+				<div class="form-group">
+					<label class="sr-only" for="emailinput_si">Email address</label><font color='red'><p id='ep1_si' style="display:none;">required</p></font>
+					<div class="input-group">
+						<div class="input-group-addon">@</div>
+						<input type="email" class="form-control" id="emailinput_si" placeholder='Enter Email address' required autofocus onkeydown='if(event.keyCode==13){bt_si.click()}'>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for='password_si'>Password</label><font color='red'><p id='pp1_si' style="display:none;">required</p></font>
+					<input type="password" class="form-control" id="password_si" placeholder='Enter Password' required onkeydown='if(event.keyCode==13){bt_si.click()}'>
+				</div>
+		</div>
+		<div class="modal-footer">
+		<div class="pull-left"><button class="btn btn-primary" data-toggle="modal" data-target="#su_Modal" style='display:none' id='bt_su'>Sign Up</button></div>
+		<button type="button" class="btn btn-default" data-dismiss="modal" id='close_si'>Close</button>
+		<button type="button" class="btn btn-primary" id="bt_si" >Sign In</button>
+		</div>
+	</div>
+	</div>
+</div>
+
+
+<p id="demo1"></p>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="dist/bootstrap.min.js"></script>
+</body>
