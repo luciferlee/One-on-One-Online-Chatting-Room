@@ -23,5 +23,12 @@
 		echo 'wrongpassword';
 		die();	
 	}
+	if ($result[status] == 'online') {
+		echo 'hasloged';
+		die();
+	}
+	$sql = "update users set status = 'online' where email = :email and password = :pwd;";
+	$sth = $db->prepare($sql);
+	$sth->execute(array(':email' =>$email, ':pwd'=>$pwd));
 	echo $result['username'];
 ?>

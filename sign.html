@@ -37,7 +37,6 @@
 					password:$("#password_si").val()
 				},
 				function(data,status){
-					alert(data);
 					checkData_si(data);
 				});
 			}
@@ -58,8 +57,9 @@
 		if(data == 'wrong'){
 			alert('Email has taken!');
 		}
-		else if(data = 'success'){
-			setCookie('username',str);;
+		else if(data == 'success'){
+			setCookie('username',str);
+			setCookie('email',$("#emailinput").val());
 			window.location.assign("http://tli32.rochestercs.org");
 		}
 	}
@@ -77,9 +77,16 @@
 			$("#emailinput_si").css("border-color","red");
 			$("#password_si").css("border-color","red");
 		}
+		else if(data == 'hasloged'){
+			$("#pp1_si").text("You have signed in another computer.");
+			$("#pp1_si").fadeIn();
+			$("#emailinput_si").css("border-color","red");
+			$("#password_si").css("border-color","red");
+		}
 		else {
 			//alert('Account is ok!\n Click Button to Chatting Page!');
 			setCookie('username',data);
+			setCookie('email',$("#emailinput_si").val());
 			window.location.assign("http://tli32.rochestercs.org");
 		}
 	}

@@ -15,8 +15,8 @@
 		echo 'wrong';
 		die();	
 	}
-	$sql = "insert into users values( :email, :pwd, :username);";
+	$sql = "insert into users values( :email, :pwd, :username, :status);";
 	$sth = $db->prepare($sql);
-	$sth->execute(array(':email' =>$email, ':pwd'=>$pwd, ':username'=>$username));
+	$sth->execute(array(':email' =>$email, ':pwd'=>$pwd, ':username'=>$username, ':status'=>'online'));
 	echo 'success';
 ?>

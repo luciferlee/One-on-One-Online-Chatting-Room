@@ -4,42 +4,380 @@
 	<title></title>
 	<!-- Bootstrap core CSS -->
 	<link href="dist/bootstrap.min.css" rel="stylesheet">
-	<link href="dist/jumbotron-narrow.css" rel="stylesheet">
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
+	<!-- <link href="dist/jumbotron-narrow.css" rel="stylesheet"> -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript" src="cookie.js"></script>
 	<script type="text/javascript">
+		function addlist(name,email){
+			var list = $("<li class='list-group-item pointing contactor'  id='"+email+"''></li>").text(name);
+			list.append($("<span class='badge' style='display:none;' id='s_"+email+"'></span>"));
+			var pannle = $('<div role="tabpanel"  class="tab-pane" id="p_'+email+'"> </div>');
+			pannle.css({"width" : $("#main").width(), "height":$("#main").height()*0.8, "overflow":"auto", "margin-top":10, "margin-bottom":10});
+			$("#dialist").append(pannle);
+			var tab = $('<li role="presentation" style="display:none;" id="t_'+email+'"><a href="#p_'+email+'" role="tab" data-toggle="tab" >'+name+'</a></li>');
+			list.click(function(){
+				friends[email] =0;
+				$("#s_"+email).hide();
+				$('#t_'+email).show();
+				$('#tabdialist a[href="#p_'+email+'"]').tab('show');
+				sendemail = email.replace(/-/gi, "@").replace(/_/gi, ".");
+			});
+			tab.click(function(){
+				sendemail = email.replace(/-/gi, "@").replace(/_/gi, ".");
+			});
+			$("#contactlists").append(list);
+			$("#tabdialist").append(tab);
+		}
+		function initDial(toemail,fromemail){
+			$.post("server/initDial.php",{
+				toemail: toemail,
+				fromemail:fromemail
+			},function(data,status){
+				console.log(data);
+				var dial = data.split("\n");
+				for (var j = 0; j < dial.length-1; j++) {
+					var d = dial[j].split("\t");
+					var text = $("<p class = 'guest'></p>").text(d[0]);
+					var time = $("<p class = 'time'></p>").text(d[1]);
+					var femail = fromemail.replace(/@/gi, "-").replace(/\./gi, "_");
+					$("#p_"+femail).append(time);
+					$("#p_"+femail).append(text);
+					$("#p_"+femail).scrollTop($("#p_"+femail)[0].scrollHeight);
+				};
+			});
+		}
+		function changeStatus(){
+			var r=confirm("Leave?")
+			if (r==true) {
+			$.post("server/logoff.php",{
+				email : getCookie('email'),
+			},function(data,status){
+			});
+			delCookie('username');
+			delCookie('email');
+			}
+		}
+		// window.onbeforeunload = function(e){
+		// 	var mes ="You will Logoff if you exit. Are you sure?";
+		// 	if (typeof e == 'undefined') {
+		// 		e = window.event;
+		// 	}
+		// 	if(e){
+		// 		e.returnValue = mes;
+		// 		changeStatus();
+		// 	}
+		// 	return mes;
+		// }
+		// function
+		var friends = {};
+		var sendemail = "";
 		$(document).ready(function(){
+			console.log($("#contain").width());
+			$("#welcome").text("Welcome "+getCookie('username'));
+			$("#main").height(($(window).height())*0.7);
+			$("#main").width(($("#contain").width())*0.6);
+			$("#contact").height(($(window).height())*0.7);
+			$("#contact").width(($("#contain").width())*0.2);
+			$("div.down").width($("#main").width());
+			$("#inputdiv").css("top",$("#main").height()-0);
+			$("#sendbox").css("width" , $("#main").width());
+			$("#bdiv").css("top",$("#main").height());
+			$("#bdiv").css("left",$("#main").width()+60);
+			$.post("server/checkfriends.php",{
+				email: getCookie('email')
+			},function(data,status){
+				var friendss = data.split("\n");
+				for (var i = 0; i < friendss.length-1; i++) {
+					var en = friendss[i].split("\t");
+					// console.log(en);
+					en[0] = en[0].replace(/@/gi, "-");
+					// console.log(en[0]);
+					en[0] = en[0].replace(/\./gi, "_");
+					// console.log(en[0]);
+					friends[en[0]] = parseInt(en[2]);
+					addlist(en[1],en[0]);
+					if (friends[en[0]] > 0) {
+						$("#s_"+en[0]).text(friends[en[0]]); 
+						$("#s_"+en[0]).show();
+						initDial(getCookie('email'),friendss[i].split("\t")[0]);
+						
+					};
+				};
+				// console.log(friends);
+				// $("li.contactor").click(function(){
+				// 	var choosen =  $(this).attr("id");
+				// 	$('#tabdialist a[href="#p_'+choosen+'"]').tab('show');
+				// 	$('div.tab-pane').removeClass('active');
+				// 	$("#p_"+choosen).addClass('active');
+				// });
+			})
+			var source = new EventSource("server/sse.php");
+				source.onmessage = function(event) {
+					console.log(event.data);
+						var obj = JSON.parse(event.data);
+						console.log(obj);
+						if (obj["t"] == getCookie('email')) {
+							var text = $("<p class = 'guest'></p>").text(obj["m"]);
+							var femail = obj['f'].replace(/@/gi, "-").replace(/\./gi, "_");
+							console.log(femail);
+					var time = $("<p class = 'time'></p>").text(obj['ti']);
+					friends[femail]++;
+					$("#s_"+femail).text(friends[femail]);
+					$("#s_"+femail).show();
+					$("#p_"+femail).append(time);
+					$("#p_"+femail).append(text);
+					$("#p_"+femail).scrollTop($("#p_"+femail)[0].scrollHeight);
+						}
+						else{
+							$.post("server/tempDia.php",{
+					fromemail : obj["f"],
+					toemail : obj["t"],
+					time:obj['ti'],
+					mes : obj["m"]
+				},function(data,status){
+					// alert(data + " and "+status);
+				});
+						}
+				};
+			$("#sendbox").val(localStorage["sendbox"]);
 			$("#logoff").click(function(){
 				var r=confirm("Sure to logoff?");
 				if(r==true){
+					$.post("server/logoff.php",{
+						email : getCookie('email'),
+					},function(data,status){
+					});
 					delCookie('username');
+					delCookie('email');
+					source.close();
+					window.location.assign("sign.html");
 				}
 			});
-			$("#welcome").text("Welcome "+getCookie('username'));
+			$("#sendbox").keyup(function(){
+				localStorage["sendbox"] = $("#sendbox").val();
+			});
+			$("#sendbutton").click(function(){
+				var message = $("#sendbox").val();
+				if (message.length == 0) {
+					$("#sendbox").popover('show');
+					return;					
+				};
+				$("#sendbox").popover('destroy');
+				$("#sendbox").val("");
+				localStorage["sendbox"] = "";
+				var t = (new Date()).toString();
+				console.log(sendemail);
+				$.post("server/tempDia.php",{
+					fromemail : getCookie('email'),
+					toemail : sendemail,
+					time : t,
+					mes : message
+				},function(data,status){
+					// alert(data + " and "+status);
+				});
+				var text = $("<p class = 'mine'></p>").text(message);
+				var time = $("<p class = 'time'></p>").text(new Date());
+				$("div.active").append(time);
+				$("div.active").append(text);
+				$("div.active").scrollTop($("div.active")[0].scrollHeight);
+			});
+			$("#searchbutton").click(function(){
+				var email = $("#emailinput").val();
+				if (email.length ==0) {$("#emailinput").popover('show'); return;}
+				$("#emailinput").popover('destroy');
+				if (email == getCookie('email')) {
+					$("#searchreuslt").fadeIn();
+					$("#hadfriend").hide();
+					$("#snap").hide();
+					$("#warning").hide();
+					$("#warning").fadeIn();
+					return;
+				};
+				$.post("server/search.php",{
+					email: email
+				},function(data, status){
+					if (data == "nouser") {
+						$("#searchreuslt").fadeIn();
+						$("#hadfriend").hide();
+						$("#snap").hide();
+						$("#warning").hide();
+						$("#snap").fadeIn();
+						return;
+					}
+					else{
+						$("#searchreuslt").fadeIn();
+						$("#snap").hide();
+						$("#hadfriend").hide();
+						$("#warning").hide();
+						$("#hadfriend").fadeIn();
+						// console.log(email.replace(/@/gi, "").replace(/\./gi, ""));
+						if (typeof friends[email.replace(/@/gi, "-").replace(/\./gi, "_")] == "undefined") {$("#p_addfriend").show();}
+						else {$("#p_addfriend").hide();}
+						return;
+					}
+				});
+			});
+			$("#closesearchbutton").click(function(){
+				$("#emailinput").val("");
+				$("#searchreuslt").hide();
+			});
+			$("#addfriend").click(function(){
+				var email = $("#emailinput").val();
+				$.post("server/addfriend.php",{
+					fromemail:getCookie('email'),
+					toemail:email 
+				},function(data,status){
+					addlist(data,email.replace(/@/gi, "-").replace(/\./gi, "_"));
+					$("#closesearchbutton").click();
+				});
+			});
+			
+			
 		});
 	</script>
-</head>
-<body onLoad="checkCookie()">
+	<style type="text/css">
+		#contact{
+			padding-right: 20px;
+		}
+		#main{
+			position: relative;
+			float: left;
+		}
+		div.absolute{
+			position: absolute;
+		}
+		#sendbox{
+			/*width:476px;*/
+			height: 50px;
+			border-radius: 25px;
+			padding: 10px;
+		}
+		.chat{
+			/*background-color: #FFEBCD;*/
+			overflow: auto;
 
-	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" >Chatting</a>
+		}
+		p.mine{
+			-background-image: url("b.jpg");
+			-border:12px ;
+			border-radius:25px;
+			text-align: right;
+			background-color: #00FFFF;
+			-float: right;
+			white-space: pre;
+			padding: 10px;
+			padding-right: 40px;
+			filter: alpha(opacity=30);
+		}
+		p.guest{
+			-background-image: url("b.jpg");
+			-border:12px ;
+			border-radius:25px;
+			text-align: left;
+			background-color: white;
+			-padding: 5px;
+			-float: left;
+			white-space: pre;
+			padding: 10px;
+			padding-left: 40px;
+			filter: alpha(opacity=30);
+		}
+		p.time{
+			text-align: center;
+			font-size: 0.5em;
+			color: grey;
+		}
+		.left{
+			float: left;
+		}
+		.center{
+			text-align: center;
+		}
+		.pointing{
+			cursor:pointer;
+		}
+	</style>
+</head>
+<body onLoad="checkCookie()" onunload="changeStatus()">
+
+	<!-- <div class="container"> -->
+		<nav class="navbar " role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" >Chatting</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li ><a id="welcome">Welcome </a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="active" id='logoff' ><button type="button" class="btn btn-link">Log Off</button></li>
+					</ul>
+				</div>
 			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li ><a id="welcome">Welcome </a></li>
+		</nav>
+
+		<div class="container" id = 'contain'>
+			<div class = "left" id="contact">
+			<ul class="list-group " id="contactlists">
+				<li class="list-group-item center active">
+					<span class="badge pointing" data-toggle="modal" data-target="#myModal">+</span>
+					My Friends
+				</li>
+			</ul>
+			</div>
+			<div class="jumbotron " id="main">
+				<!-- <div class="absolute" id="chat">
+				</div> -->
+				<ul class="nav nav-tabs" role="tablist" id="tabdialist">
+					<!-- <li role="presentation" id="myTab"><a href="#messages" role="tab" data-toggle="tab">Messages</a></li> -->
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li class="active" id='logoff' ><a>Log Off</a></li>
-				</ul>
+				<div class="tab-content" id="dialist">
+					<!-- <div role="tabpanel" class="tab-pane" id="messages">...</div> -->
+				</div>
+				<div class="absolute" id="inputdiv">
+					<input class="form-control" id = "sendbox" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Can NOT send empty" onkeydown='if(event.keyCode==13){sendbutton.click()}'></inpit>
+				</div>
+				<div class="absolute" id = "bdiv">
+					<button type="button" class="btn btn-link " id = "sendbutton">send</button>
+				</div>
+			</div>
+		</div>
+	<!-- </div> -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="myModalLabel">Add Friend</h4>
+				</div>
+				<div class="modal-body">
+					Find by Email:
+					<div class="input-group">
+						<div class="input-group-addon">@</div>
+						<input type="email" class="form-control" id="emailinput" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Can NOT be empty" placeholder='Enter Email address' required autofocus onkeydown='if(event.keyCode==13){searchbutton.click()}'>
+					</div>
+
+				</div>
+				<div class="modal-body" id = "searchreuslt" style="display:none;">
+					<div class="alert alert-danger" role="alert" style="display:none;" id="snap">
+ 						<strong>Oh snap!</strong> We cannot find the email.
+					</div>
+					<div class="alert alert-success center" role="alert" style="display:none;" id="hadfriend">
+						<strong>Success!</strong> <p id="p_addfriend" style="display:none;">Add Friend?<span class="badge pointing" id="addfriend">+</span></p>
+					</div>
+					<div class="alert alert-warning" role="alert" style="display:none;" id="warning">
+ 						<strong>Warning! </strong> Cannot add yourself as a friend.
+					</div>
+					<p></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="closesearchbutton">Close</button>
+					<button type="button" class="btn btn-primary" id="searchbutton">Search</button>
+				</div>
 			</div>
 		</div>
 	</div>
-
-
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="dist/bootstrap.min.js"></script>
 
 </body>
