@@ -46,29 +46,18 @@
 				};
 			});
 		}
-		function changeStatus(){
-			var r=confirm("Leave?")
-			if (r==true) {
+		function changeStatus(sta){
+			// var r=confirm("Leave?")
+			// if (r==true) {
 			$.post("server/logoff.php",{
 				email : getCookie('email'),
+				status : sta
 			},function(data,status){
 			});
-			delCookie('username');
-			delCookie('email');
-			}
+			// }
 		}
-		// window.onbeforeunload = function(e){
-		// 	var mes ="You will Logoff if you exit. Are you sure?";
-		// 	if (typeof e == 'undefined') {
-		// 		e = window.event;
-		// 	}
-		// 	if(e){
-		// 		e.returnValue = mes;
-		// 		changeStatus();
-		// 	}
-		// 	return mes;
-		// }
-		// function
+		
+		
 		var friends = {};
 		var sendemail = "";
 		$(document).ready(function(){
@@ -94,7 +83,7 @@
 					// console.log(en[0]);
 					en[0] = en[0].replace(/\./gi, "_");
 					// console.log(en[0]);
-					friends[en[0]] = parseInt(en[2]);
+					friends[en[0]] = parseInt(en[3]);
 					addlist(en[1],en[0]);
 					if (friends[en[0]] > 0) {
 						$("#s_"+en[0]).text(friends[en[0]]); 
@@ -120,6 +109,14 @@
 							var text = $("<p class = 'guest'></p>").text(obj["m"]);
 							var femail = obj['f'].replace(/@/gi, "-").replace(/\./gi, "_");
 							console.log(femail);
+							if (typeof friends[obj['f'].replace(/@/gi, "-").replace(/\./gi, "_")] == "undefined"){
+								$.post("server/search.php",{
+									email: obj['f']
+								},function(data, status){
+									addlist(data, obj['f'].replace(/@/gi, "-").replace(/\./gi, "_"));
+									friends[obj['f'].replace(/@/gi, "-").replace(/\./gi, "_")] = 0;
+								});
+							}
 					var time = $("<p class = 'time'></p>").text(obj['ti']);
 					friends[femail]++;
 					$("#s_"+femail).text(friends[femail]);
@@ -143,10 +140,7 @@
 			$("#logoff").click(function(){
 				var r=confirm("Sure to logoff?");
 				if(r==true){
-					$.post("server/logoff.php",{
-						email : getCookie('email'),
-					},function(data,status){
-					});
+					changeStatus('offline');
 					delCookie('username');
 					delCookie('email');
 					source.close();
@@ -298,7 +292,7 @@
 		}
 	</style>
 </head>
-<body onLoad="checkCookie()" onunload="changeStatus()">
+<body onLoad="checkCookie()" onbeforeunload="changeStatus('offline');">
 
 	<!-- <div class="container"> -->
 		<nav class="navbar " role="navigation">
